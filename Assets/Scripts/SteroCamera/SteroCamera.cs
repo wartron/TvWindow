@@ -12,6 +12,7 @@ public class SteroCamera : MonoBehaviour {
     public bool flipEyes = false;
 
     public float hScale = 0.005f;
+    public float vScale = 0.0005f;
 
     public Text labelDepth;
 
@@ -25,12 +26,24 @@ public class SteroCamera : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+    void Update()
+    {
         float h = Input.GetAxis("Horizontal");
 
         if (h != 0)
         {
             cameraSpread += h * hScale;
+
+            adjustDepth();
+        }
+
+
+
+        float v = Input.GetAxis("Vertical");
+
+        if (v != 0)
+        {
+            cameraSpread += v * vScale;
 
             adjustDepth();
         }
@@ -62,7 +75,7 @@ public class SteroCamera : MonoBehaviour {
         cameraRight.transform.localPosition = new Vector3(rightX, 0, 0);
 
 
-        labelDepth.text = string.Format("3D Depth: {0}", cameraSpread);
+        labelDepth.text = string.Format("3D Depth: {0:F6}", cameraSpread);
 
 
     }
