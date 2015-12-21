@@ -1,5 +1,4 @@
 # TvWindow
---------
 
 Unity Stereoscopic 3D HSBS (Half Side by Side) experiments.
 
