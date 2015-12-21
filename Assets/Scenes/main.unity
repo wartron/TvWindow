@@ -1358,42 +1358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraLeft: {fileID: 1198813607}
   cameraRight: {fileID: 1373788569}
-  leftProjection:
-    e00: 0
-    e01: 0
-    e02: 0
-    e03: 0
-    e10: 0
-    e11: 0
-    e12: 0
-    e13: 0
-    e20: 0
-    e21: 0
-    e22: 0
-    e23: 0
-    e30: 0
-    e31: 0
-    e32: 0
-    e33: 0
-  rightProjection:
-    e00: 0
-    e01: 0
-    e02: 0
-    e03: 0
-    e10: 0
-    e11: 0
-    e12: 0
-    e13: 0
-    e20: 0
-    e21: 0
-    e22: 0
-    e23: 0
-    e30: 0
-    e31: 0
-    e32: 0
-    e33: 0
-  defaultCameraSpread: .0500000007
-  cameraSpread: 0
+  cameraSpread: .100000001
   flipEyes: 0
   hScale: .00499999989
   vScale: 4.99999987e-05

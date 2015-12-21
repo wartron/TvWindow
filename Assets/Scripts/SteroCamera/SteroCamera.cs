@@ -8,39 +8,25 @@ public class SteroCamera : MonoBehaviour
     public Camera cameraLeft;
     public Camera cameraRight;
 
-    public Matrix4x4 leftProjection;
-    public Matrix4x4 rightProjection;
 
-    public float defaultCameraSpread = 0.05f;
-    public float cameraSpread;
+    public float cameraSpread = 0.1f;
+
     public bool flipEyes = false;
 
+    //TODO: Move outside camera
     public float hScale = 0.005f;
     public float vScale = 0.00005f;
-
     public Text labelDepth;
 
-    // Use this for initialization
+
+
     void Start()
     {
-        cameraSpread = defaultCameraSpread;
-
-        leftProjection = cameraLeft.projectionMatrix;
-        rightProjection = cameraRight.projectionMatrix;
-
-        //leftProjection.m11 = 2.5f;
-        //rightProjection.m11 = 2.5f;
-
-        leftProjection.m00 = 1.4f;
-        rightProjection.m00 = 1.4f;
-
-        cameraLeft.projectionMatrix = leftProjection;
-        cameraRight.projectionMatrix = rightProjection;
-
+        adjustProjection();
         adjustDepth();
-
     }
 
+    //TODO: Move outside camera
     void Update()
     {
         float h = Input.GetAxis("Horizontal");
@@ -49,20 +35,37 @@ public class SteroCamera : MonoBehaviour
         if (h != 0)
         {
             cameraSpread += h * hScale;
-
             adjustDepth();
         }
 
         if (v != 0)
         {
             cameraSpread += v * vScale;
-
             adjustDepth();
         }
-        
-        //cameraLeft.projectionMatrix = leftProjection;
 
+    }
 
+    void adjustProjection()
+    {
+        Matrix4x4 leftProjection = cameraLeft.projectionMatrix;
+        Matrix4x4 rightProjection = cameraRight.projectionMatrix;
+
+        if (true) //hsbs
+        {
+            leftProjection.m00 = leftProjection.m00 / 2.0f;
+            rightProjection.m00 = rightProjection.m00 / 2.0f;
+
+        }
+        else //h-ov
+        {
+            leftProjection.m11 = leftProjection.m11 / 2.0f;
+            rightProjection.m11 = rightProjection.m11 / 2.0f;
+
+        }
+
+        cameraLeft.projectionMatrix = leftProjection;
+        cameraRight.projectionMatrix = rightProjection;
 
     }
 
@@ -87,7 +90,7 @@ public class SteroCamera : MonoBehaviour
         cameraLeft.transform.localPosition = new Vector3(leftX, 0, 0);
         cameraRight.transform.localPosition = new Vector3(rightX, 0, 0);
 
-
+        //TODO: Move outside camera
         labelDepth.text = string.Format("3D Depth: {0:F6}", cameraSpread);
 
 
