@@ -2,33 +2,49 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class SteroCamera : MonoBehaviour {
+public class SteroCamera : MonoBehaviour
+{
 
     public Camera cameraLeft;
     public Camera cameraRight;
 
-    public float defaultCameraSpread = 0.2f;
+    public Matrix4x4 leftProjection;
+    public Matrix4x4 rightProjection;
+
+    public float defaultCameraSpread = 0.05f;
     public float cameraSpread;
     public bool flipEyes = false;
 
     public float hScale = 0.005f;
-    public float vScale = 0.0005f;
+    public float vScale = 0.00005f;
 
     public Text labelDepth;
 
-	// Use this for initialization
-	void Start () {
-
+    // Use this for initialization
+    void Start()
+    {
         cameraSpread = defaultCameraSpread;
+
+        leftProjection = cameraLeft.projectionMatrix;
+        rightProjection = cameraRight.projectionMatrix;
+
+        //leftProjection.m11 = 2.5f;
+        //rightProjection.m11 = 2.5f;
+
+        leftProjection.m00 = 1.4f;
+        rightProjection.m00 = 1.4f;
+
+        cameraLeft.projectionMatrix = leftProjection;
+        cameraRight.projectionMatrix = rightProjection;
 
         adjustDepth();
 
-	}
-	
-	// Update is called once per frame
+    }
+
     void Update()
     {
         float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
 
         if (h != 0)
         {
@@ -37,21 +53,18 @@ public class SteroCamera : MonoBehaviour {
             adjustDepth();
         }
 
-
-
-        float v = Input.GetAxis("Vertical");
-
         if (v != 0)
         {
             cameraSpread += v * vScale;
 
             adjustDepth();
         }
+        
+        //cameraLeft.projectionMatrix = leftProjection;
 
 
 
-	}
-
+    }
 
     void adjustDepth()
     {
